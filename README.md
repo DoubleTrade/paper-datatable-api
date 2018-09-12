@@ -1,4 +1,4 @@
-# \<new-paper-datatable-api\>
+# \<paper-datatable-api\>
 
 
 

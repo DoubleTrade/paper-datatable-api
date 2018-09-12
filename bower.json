@@ -1,6 +1,6 @@
 {
-  "name": "new-paper-datatable-api",
-  "main": "new-paper-datatable-api.html",
+  "name": "paper-datatable-api",
+  "main": "paper-datatable-api.html",
   "version": "0.0.1",
   "dependencies": {
     "polymer": "Polymer/polymer#^2.0.0",
