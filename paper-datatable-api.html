@@ -1,0 +1,262 @@
+<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="paper-datatable-api-column.html">
+
+<dom-module id="paper-datatable-api">
+  <script>
+    /**
+     * `paper-datatable-api`
+     *
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class PaperDatatableApi extends Polymer.Element {
+      static get is() {
+        return 'paper-datatable-api';
+      }
+
+      static get template() {
+        return Polymer.html`
+          <style>
+            :host {
+              display: block;
+            }
+
+            slot {
+              display: none;
+            }
+
+            table {
+              width: 100%;
+              border-spacing: 0px;
+              border-collapse: seperate;
+              @apply --paper-font-common-base;
+              @apply --paper-datatable-api-table;
+            }
+
+            thead th {
+              font-size: 12px;
+              color: rgba(0, 0, 0, var(--dark-secondary-opacity));
+              font-weight: 500;
+              text-align: left;
+              white-space: nowrap;
+              padding: var(--paper-datatable-api-padding, 6px 26px);
+              height: var(--paper-datable-api-height, 43px);
+              border-bottom: 1px solid;
+              border-color: rgba(0, 0, 0, var(--dark-divider-opacity));
+              @apply --paper-datatable-api-header;
+            }
+
+            tbody tr {
+              @apply --paper-datatable-api-tr;
+              height: 48px;
+            }
+
+            tbody tr:nth-child(even) {
+              background-color: var(--paper-datatable-api-tr-even-background-color, none);
+            }
+
+            tbody tr:nth-child(odd) {
+              background-color: var(--paper-datatable-api-tr-odd-background-color, none);
+            }
+
+            tbody tr:hover {
+              background: var(--paper-datatable-api-tr-hover-background-color, none);
+            }
+
+            tbody tr.selected {
+              background-color: var(--paper-datatable-api-tr-selected-background, var(--paper-grey-100));
+            }
+
+            tbody td {
+              font-size: 13px;
+              font-weight: normal;
+              color: rgba(0, 0, 0, var(--dark-primary-opacity));
+              padding: 6px var(--paper-datatable-api-horizontal-padding, 26px);
+            }
+
+            tbody tr:not(:first-child) td {
+              border-top: 1px solid;
+              border-color: rgba(0, 0, 0, var(--dark-divider-opacity));
+            }
+
+            thead th.customTd,
+            tbody td.customTd {
+              @apply --paper-datatable-api-custom-td;
+            }
+          </style>
+          <table>
+            <thead>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+      `;
+      }
+
+      static get properties() {
+        return {
+          conf: {
+            type: Array,
+            value: () => [],
+          },
+          data: {
+            type: Array,
+            value: () => [],
+          },
+          paperDatatableApiColumns: {
+            type: Array,
+            value: () => [],
+          },
+          paperDatatableApiColumnsHeader: {
+            type: Array,
+            value: () => [],
+          },
+          _observer: Object,
+        };
+      }
+
+      static get observers() {
+        return ['_dataChanged(data, conf)'];
+      }
+
+      connectedCallback() {
+        super.connectedCallback();
+        this._observer = new Polymer.FlattenedNodesObserver(this, ({ addedNodes }) => {
+          this.paperDatatableApiColumns = addedNodes
+            .filter(n =>
+              n.tagName === 'PAPER-DATATABLE-API-COLUMN' && n.getAttribute('column') !== null)
+            .reduce((columns, n) => {
+              const property = n.getAttribute('property');
+              const newColumns = columns;
+              newColumns[property] = n;
+              return newColumns;
+            }, {});
+
+          this.paperDatatableApiColumnsHeader = addedNodes
+            .filter(n =>
+              n.tagName === 'PAPER-DATATABLE-API-COLUMN' && n.getAttribute('header') !== null)
+            .reduce((columns, n) => {
+              const property = n.getAttribute('property');
+              const newColumns = columns;
+              newColumns[property] = n;
+              return newColumns;
+            }, {});
+          if (this.data && this.conf) {
+            this._dataChanged(this.data, this.conf);
+          }
+        });
+      }
+
+      disconnectedCallback() {
+        super.disconnectedCallback();
+        this._observer.disconnect();
+      }
+
+      _removeHeaders(type) {
+        const pgTrs = this.shadowRoot.querySelectorAll(`${type} tr`);
+        pgTrs.forEach(pgTr => this.shadowRoot.querySelector(type).removeChild(pgTr));
+      }
+
+      _fillHeaders(conf) {
+        this._removeHeaders('thead');
+        if (conf) {
+          const trLocal = document.createElement('tr');
+          conf.forEach((columnInfo) => {
+            if (!columnInfo.hidden) {
+              const thLocal = document.createElement('th');
+              const paperDatatableApiColumnHeader =
+                this.paperDatatableApiColumnsHeader[columnInfo.property];
+              if (paperDatatableApiColumnHeader) {
+                const instance = paperDatatableApiColumnHeader.fillTemplate(columnInfo.header);
+                thLocal.appendChild(instance.root);
+              } else {
+                thLocal.innerText = columnInfo.header;
+              }
+              if (columnInfo.tdCustomStyle) {
+                thLocal.classList.add('customTd');
+              }
+              trLocal.appendChild(thLocal);
+            }
+          });
+          this.shadowRoot.querySelector('thead').appendChild(trLocal);
+        }
+      }
+
+      _fillRows(data, conf) {
+        this._removeHeaders('tbody');
+        if (data && conf) {
+          data.forEach((rowData) => {
+            const trLocal = document.createElement('tr');
+            this._fillColumns(rowData, conf, trLocal);
+            trLocal.addEventListener('mouseover', () => this.dispatchEvent(new CustomEvent('tr-mouseover', { detail: rowData })));
+            // this.listen(trLocal, 'mouseout', 'onOutTr');
+            // this.listen(trLocal, 'tap', 'onTapTr');
+            this.shadowRoot.querySelector('tbody').appendChild(trLocal);
+          });
+        }
+      }
+
+      _fillColumns(rowData, conf, trLocal) {
+        if (rowData && conf) {
+          try {
+            conf.forEach((columnInfo) => {
+              if (!columnInfo.hidden) {
+                const paperDatatableApiColumn = this.paperDatatableApiColumns[columnInfo.property];
+
+                const valueFromRowData = this._extractData(rowData, columnInfo.property);
+                const otherPropertiesValue = {};
+                if (paperDatatableApiColumn && paperDatatableApiColumn.otherProperties) {
+                  paperDatatableApiColumn.otherProperties.forEach((property) => {
+                    otherPropertiesValue[property] = this._extractData(rowData, property);
+                  });
+                }
+                const tdLocal = document.createElement('td');
+                if (paperDatatableApiColumn && paperDatatableApiColumn.fillTemplate) {
+                  const instance = paperDatatableApiColumn.fillTemplate(
+                    valueFromRowData,
+                    otherPropertiesValue
+                  );
+                  tdLocal.appendChild(instance.root);
+                  if (columnInfo.tdCustomStyle) {
+                    tdLocal.classList.add('customTd');
+                  }
+                }
+                trLocal.appendChild(tdLocal);
+              }
+            });
+          } catch (e) {
+            console.log(e);
+          }
+        }
+      }
+
+      _extractData(rowData, columnProperty) {
+        if (columnProperty) {
+          const splittedProperties = columnProperty.split('.');
+          if (splittedProperties.length > 1) {
+            return splittedProperties.reduce((prevRow, property) => {
+              if (typeof prevRow === 'string' && rowData[prevRow] && rowData[prevRow][property]) {
+                return rowData[prevRow][property];
+              }
+
+              return prevRow[property] || '';
+            });
+          }
+          return rowData[columnProperty];
+        }
+        return null;
+      }
+
+      _dataChanged(data, conf) {
+        if (data && conf && conf.length > 0) {
+          this._fillHeaders(conf);
+          this._fillRows(data, conf);
+        }
+      }
+    }
+
+    window.customElements.define(PaperDatatableApi.is, PaperDatatableApi);
+  </script>
+</dom-module>

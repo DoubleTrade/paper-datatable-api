@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+  <title>new-paper-datatable-api demo</title>
+
+  <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+
+  <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+  <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+  <link rel="import" href="../../iron-ajax/iron-ajax.html">
+  <link rel="import" href="../../paper-input/paper-input.html">
+  <link rel="import" href="../paper-datatable-api.html">
+  <link rel="import" href="../paper-datatable-api-column.html">
+
+  <custom-style>
+    <style is="custom-style" include="demo-pages-shared-styles">
+    </style>
+  </custom-style>
+</head>
+
+<body>
+  <div class="vertical-section-container centered">
+    <h3>Basic new-paper-datatable-api demo</h3>
+    <demo-snippet>
+      <template>
+        <dom-bind>
+          <template>
+            <iron-ajax auto url="data/data.json" last-response="{{data}}"></iron-ajax>
+            <iron-ajax auto url="data/conf.json" last-response="{{conf}}"></iron-ajax>
+
+            <paper-datatable-api conf="[[conf]]" data="[[data]]" selectable>
+              <paper-datatable-api-column header property="fruit">
+                <template>
+                  <paper-input no-label-float label="Fruit"></paper-input>
+                </template>
+              </paper-datatable-api-column>
+              <paper-datatable-api-column column property="fruit" other-properties='["color"]'>
+                <template>
+                  <span>[[value]], color: [[otherValues.color]]</span>
+                </template>
+              </paper-datatable-api-column>
+              <paper-datatable-api-column column property="weight">
+                <template>
+                  <span>[[value.kg]]</span>
+                </template>
+              </paper-datatable-api-column>
+              <paper-datatable-api-column column property="weight.gr">
+                <template>
+                  <span>[[value]]</span>
+                </template>
+              </paper-datatable-api-column>
+            </paper-datatable-api>
+          </template>
+        </dom-bind>
+      </template>
+    </demo-snippet>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,107 @@
+<link rel="import" href="../../polymer/polymer-element.html">
+<link rel="import" href="../../paper-input/paper-input.html">
+<link rel="import" href="../../paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="./pda-header-with-sort.html">
+
+<dom-module id="pda-header-with-filter-and-sort">
+  <script>
+    /**
+     * `pda-header-with-sort`
+     *
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class PdaHeaderWithFilterAndSort extends Polymer.Element {
+      static get is() {
+        return 'pda-header-with-filter-and-sort';
+      }
+
+      static get template() {
+        return Polymer.html`
+          <style include="iron-flex iron-flex-alignment">
+            :host {
+              display: block;
+            }
+
+            paper-input {
+              min-width: var(--paper-datatable-api-min-width-input-filter, 120px);
+              --paper-input-container-underline-focus: {
+                display: block;
+              }
+              ;
+              --paper-input-container-label: {
+                position: initial;
+              }
+              ;
+              --paper-input-container: {
+                padding: 0;
+              }
+              ;
+              --paper-input-container-input: {
+                font-size: 12px;
+              }
+              ;
+            }
+
+            paper-icon-button {
+            }
+          </style>
+            <dom-if if="[[active]]">
+              <template>
+                <pda-header-with-sort direction="{{direction}}">
+                  <paper-input no-label-float placeholder="[[header]]" value="{{filterValue}}">
+                    <paper-icon-button icon="clear" slot="suffix" on-tap="_toggleActive"></paper-icon-button>
+                  </paper-input>
+                </pda-header-with-sort>
+              </template>
+            </dom-if>
+            <dom-if if="[[!active]]">
+              <template>
+                <pda-header-with-sort direction="{{direction}}" on-tap="_toggleActive">
+                  [[header]]
+                  <paper-icon-button slot="actions" icon="search"></paper-icon-button>
+                </pda-header-with-sort>
+              </template>
+            </dom-if>
+      `;
+      }
+
+      static get properties() {
+        return {
+          header: String,
+          direction: {
+            type: String,
+            notify: true,
+          },
+          active: {
+            type: Boolean,
+            value: false,
+            notify: true,
+          },
+          filterValue: {
+            type: String,
+            notify: true,
+          },
+        };
+      }
+
+      _toggleActive() {
+        this.set('active', !this.active);
+        if (!this.active) {
+          this.set('filterValue', null);
+        }
+        Polymer.dom.flush();
+        const paperInput = this.shadowRoot.querySelector('paper-input');
+        paperInput.setAttribute('tabindex', 1);
+        Polymer.Async.microTask.run(() => {
+          paperInput.focus();
+        });
+      }
+    }
+
+    window.customElements.define(PdaHeaderWithFilterAndSort.is, PdaHeaderWithFilterAndSort);
+  </script>
+</dom-module>

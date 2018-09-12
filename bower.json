@@ -1,0 +1,24 @@
+{
+  "name": "new-paper-datatable-api",
+  "main": "new-paper-datatable-api.html",
+  "dependencies": {
+    "polymer": "Polymer/polymer#^2.0.0",
+    "paper-styles": "^2.1.0",
+    "paper-checkbox": "^2.0.4",
+    "paper-listbox": "^2.1.1",
+    "paper-item": "^2.1.1",
+    "paper-icon-button": "^2.2.0",
+    "paper-dropdown-menu": "^2.1.0",
+    "paper-input": "^2.2.3"
+  },
+  "devDependencies": {
+    "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^2.0.0",
+    "web-component-tester": "Polymer/web-component-tester#^6.0.0",
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.0",
+    "iron-ajax": "^2.1.3",
+    "paper-input": "^2.2.3"
+  },
+  "resolutions": {
+    "polymer": "^2.0.0"
+  }
+}

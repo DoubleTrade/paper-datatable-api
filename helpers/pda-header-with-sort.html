@@ -1,0 +1,77 @@
+<link rel="import" href="../../polymer/polymer-element.html">
+<link rel="import" href="../../iron-flex-layout/iron-flex-layout-classes.html">
+
+<dom-module id="pda-header-with-sort">
+  <script>
+    /**
+     * `pda-header-with-sort`
+     *
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class PdaHeaderWithSort extends Polymer.Element {
+      static get is() {
+        return 'pda-header-with-sort';
+      }
+
+      static get template() {
+        return Polymer.html`
+          <style include="iron-flex iron-flex-alignment">
+            :host {
+              display: block;
+            }
+
+            paper-icon-button {
+              transition: transform .2s linear;
+            }
+
+            .desc {
+              color: var(--paper-light-green-600);
+              transform: rotate(0deg);
+            }
+
+            .asc {
+              color: var(--paper-light-green-600);
+              transform: rotate(180deg);
+            }
+          </style>
+          <div class="layout horizontal center">
+            <div class="flex">
+              <slot></slot>
+            </div>
+            <slot name="actions"></slot>
+            <paper-icon-button icon="arrow-downward" on-tap="_handleSort" class$="[[direction]]"></paper-icon-button>
+          </div>
+      `;
+      }
+
+      static get properties() {
+        return {
+          direction: {
+            type: String,
+            notify: true,
+            value: '',
+          },
+        };
+      }
+
+      _handleSort() {
+        switch (this.direction) {
+          case '':
+            this.direction = 'desc';
+            break;
+          case 'desc':
+            this.direction = 'asc';
+            break;
+          default:
+            this.direction = '';
+            break;
+        }
+      }
+    }
+
+    window.customElements.define(PdaHeaderWithSort.is, PdaHeaderWithSort);
+  </script>
+</dom-module>

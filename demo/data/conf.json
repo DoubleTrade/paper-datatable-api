@@ -1,0 +1,14 @@
+[
+  {
+    "property": "fruit",
+    "header": "Fruit"
+  },
+  {
+    "property": "weight",
+    "header": "Weight"
+  },
+  {
+    "property": "weight.gr",
+    "header": "Gr"
+  }
+]
