@@ -1,0 +1,101 @@
+<link rel="import" href="../../polymer/polymer-element.html">
+<link rel="import" href="../../paper-menu-button/paper-menu-button.html">
+<link rel="import" href="../../paper-listbox/paper-listbox.html">
+<link rel="import" href="../../paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../paper-item/paper-icon-item.html">
+<link rel="import" href="../../paper-item/paper-item-body.html">
+<link rel="import" href="../../iron-icons/iron-icons.html">
+<link rel="import" href="../../iron-icon/iron-icon.html">
+<link rel="import" href="../../iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="./pda-header-with-sort.html">
+
+<dom-module id="pda-header-with-choices-and-sort">
+  <script>
+    /**
+     * `pda-header-with-sort`
+     *
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class PdaHeaderWithChoicesAndSort extends Polymer.Element {
+      static get is() {
+        return 'pda-header-with-choices-and-sort';
+      }
+
+      static get template() {
+        return Polymer.html`
+          <style include="iron-flex iron-flex-alignment">
+            :host {
+              display: block;
+            }
+
+            paper-menu-button {
+              padding: 0;
+            }
+
+            iron-icon[icon="check-box"] {
+              color: var(--paper-datatable-api-checked-checkbox-color, --primary-color);
+            }
+
+            iron-icon[icon="check-box-outline-blank"] {
+              color: var(--paper-datatable-api-unchecked-checkbox-color, --primary-text-color);
+            }
+          </style>
+          <pda-header-with-sort direction="{{direction}}">
+            <div class="layout horizontal center">
+              <paper-menu-button ignore-select dynamic-align>
+                <div slot="dropdown-trigger" class="layout horizontal center">
+                  <span class="flex">[[header]]</span>
+                  <paper-icon-button icon="arrow-drop-down"></paper-icon-button>
+                </div>
+                <paper-listbox slot="dropdown-content" selected-values="{{selectedChoices}}" multi attr-for-selected="name">
+                  <dom-repeat items="[[choices]]" as="choice">
+                    <template>
+                      <paper-icon-item name="[[choice.key]]">
+                        <iron-icon slot="item-icon" icon$="[[_computeIconName(choice.key, selectedChoices.*)]]"></iron-icon>
+                        <paper-item-body style$="[[choice.style]]">
+                          [[choice.label]]
+                        </paper-item-body>
+                      </paper-icon-item>
+                    </template>
+                  </dom-repeat>
+                </paper-listbox>
+              </paper-menu-button>
+            </div>
+          </pda-header-with-sort>
+      `;
+      }
+
+      static get properties() {
+        return {
+          header: String,
+          direction: {
+            type: String,
+            notify: true,
+          },
+          choices: Array,
+          selectedItems: {
+            type: Array,
+            notify: true,
+          },
+          selectedChoices: {
+            type: Array,
+            notify: true,
+          },
+        };
+      }
+
+      _computeIconName(choice, selectedChoices) {
+        console.log(selectedChoices);
+        if (selectedChoices.base.indexOf(choice) === -1) {
+          return 'check-box-outline-blank';
+        }
+        return 'check-box';
+      }
+    }
+
+    window.customElements.define(PdaHeaderWithChoicesAndSort.is, PdaHeaderWithChoicesAndSort);
+  </script>
+</dom-module>
