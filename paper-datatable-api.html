@@ -105,6 +105,11 @@
             type: Array,
             value: () => [],
           },
+          selectedData: {
+            type: Array,
+            observer: '_selectedDataChanged',
+          },
+          selectedKey: String,
           paperDatatableApiColumns: {
             type: Array,
             value: () => [],
@@ -191,9 +196,17 @@
             const trLocal = document.createElement('tr');
             this._fillColumns(rowData, conf, trLocal);
             trLocal.addEventListener('mouseover', () => this.dispatchEvent(new CustomEvent('tr-mouseover', { detail: rowData })));
+            trLocal.addEventListener('tap', () => this.dispatchEvent(new CustomEvent('tap-tr', { detail: rowData })));
             // this.listen(trLocal, 'mouseout', 'onOutTr');
-            // this.listen(trLocal, 'tap', 'onTapTr');
             this.shadowRoot.querySelector('tbody').appendChild(trLocal);
+
+            if (this.selectedKey) {
+              const selectable = this._extractData(rowData, this.selectedKey);
+              trLocal.dataset.selectable = selectable;
+              if (this.selectedData.indexOf(selectable) !== -1) {
+                trLocal.classList.add('selected');
+              }
+            }
           });
         }
       }
@@ -222,6 +235,8 @@
                   if (columnInfo.tdCustomStyle) {
                     tdLocal.classList.add('customTd');
                   }
+                } else {
+                  tdLocal.innerText = valueFromRowData;
                 }
                 trLocal.appendChild(tdLocal);
               }
@@ -253,6 +268,19 @@
         if (data && conf && conf.length > 0) {
           this._fillHeaders(conf);
           this._fillRows(data, conf);
+        }
+      }
+
+      _selectedDataChanged(selectedData) {
+        const allRows = this.shadowRoot.querySelectorAll('table tbody tr');
+        if (allRows && allRows.length > 0) {
+          allRows.forEach((tr) => {
+            if (selectedData.indexOf(tr.dataset.selectable) !== -1) {
+              tr.classList.add('selected');
+            } else {
+              tr.classList.remove('selected');
+            }
+          });
         }
       }
     }
