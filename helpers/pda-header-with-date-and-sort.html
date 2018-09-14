@@ -2,9 +2,10 @@
 <link rel="import" href="../../paper-input/paper-input.html">
 <link rel="import" href="../../paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../../range-datepicker/range-datepicker-input.html">
 <link rel="import" href="./pda-header-with-sort.html">
 
-<dom-module id="pda-header-with-filter-and-sort">
+<dom-module id="pda-header-with-date-and-sort">
   <script>
     /**
      * `pda-header-with-sort`
@@ -14,9 +15,9 @@
      * @polymer
      * @demo demo/index.html
      */
-    class PdaHeaderWithFilterAndSort extends Polymer.Element {
+    class PdaHeaderWithDateAndSort extends Polymer.Element {
       static get is() {
-        return 'pda-header-with-filter-and-sort';
+        return 'pda-header-with-date-and-sort';
       }
 
       static get template() {
@@ -52,19 +53,23 @@
             <dom-if if="[[active]]">
               <template>
                 <pda-header-with-sort direction="{{direction}}">
-                  <paper-input no-label-float placeholder="[[header]]" value="{{filterValue}}">
-                    <paper-icon-button icon="clear" slot="suffix" on-tap="_toggleActive"></paper-icon-button>
-                  </paper-input>
+                  <div class="layout horizontal center">
+                    <range-datepicker-input horizontal-align="right" date-format="[[dateFormat]]" locale="[[locale]]" date-from="{{dateFrom}}" date-to="{{dateTo}}" force-narrow>
+                      <template>
+                        <paper-input no-label-float placeholder="[[header]]" value="[[_computeDate(dateFrom, dateTo)]]" readonly>
+                        </paper-input>
+                      </template>
+                    </range-datepicker-input>
+                    <paper-icon-button icon="clear" on-tap="_clearDate"></paper-icon-button>
+                  </div>
                 </pda-header-with-sort>
               </template>
             </dom-if>
             <dom-if if="[[!active]]">
               <template>
-                <pda-header-with-sort direction="{{direction}}">
-                  <div on-tap="_toggleActive">
-                    [[header]]
-                  </div>
-                  <paper-icon-button slot="actions" icon="search" on-tap="_toggleActive"></paper-icon-button>
+                <pda-header-with-sort direction="{{direction}}" on-tap="_toggleActive">
+                  [[header]]
+                  <paper-icon-button slot="actions" icon="search"></paper-icon-button>
                 </pda-header-with-sort>
               </template>
             </dom-if>
@@ -83,17 +88,36 @@
             value: false,
             notify: true,
           },
-          filterValue: {
+          dateFrom: {
             type: String,
-            notify: true,
           },
+          dateTo: {
+            type: String,
+          },
+          locale: String,
         };
+      }
+
+      static get observers() {
+        return ['_dateChanged(dateTo)'];
+      }
+
+      _dateChanged(dateTo) {
+        if (this.dateFrom && dateTo) {
+          this.dispatchEvent(new CustomEvent('filter', {
+            detail: {
+              dateFrom: parseInt(this.dateFrom, 10),
+              dateTo: parseInt(dateTo, 10),
+            },
+          }));
+        }
       }
 
       _toggleActive() {
         this.set('active', !this.active);
         if (!this.active) {
-          this.set('filterValue', null);
+          this.set('dateFrom', null);
+          this.set('dateTo', null);
         }
         Polymer.dom.flush();
         const paperInput = this.shadowRoot.querySelector('paper-input');
@@ -102,8 +126,25 @@
           paperInput.focus();
         });
       }
+
+      _computeDate(dateFrom, dateTo) {
+        if (dateFrom && dateTo) {
+          return `${dateFrom} ${dateTo}`;
+        }
+        return null;
+      }
+
+      _clearDate() {
+        this._toggleActive();
+        this.dispatchEvent(new CustomEvent('filter', {
+          detail: {
+            dateFrom: null,
+            dateTo: null,
+          },
+        }));
+      }
     }
 
-    window.customElements.define(PdaHeaderWithFilterAndSort.is, PdaHeaderWithFilterAndSort);
+    window.customElements.define(PdaHeaderWithDateAndSort.is, PdaHeaderWithDateAndSort);
   </script>
 </dom-module>
