@@ -54,9 +54,9 @@
               <template>
                 <pda-header-with-sort direction="{{direction}}">
                   <div class="layout horizontal center">
-                    <range-datepicker-input horizontal-align="right" date-format="[[dateFormat]]" locale="[[locale]]" date-from="{{dateFrom}}" date-to="{{dateTo}}" force-narrow>
+                    <range-datepicker-input no-range="[[noRange]]" horizontal-align="right" date-format="[[dateFormat]]" locale="[[locale]]" date-from="{{dateFrom}}" date-to="{{dateTo}}" force-narrow>
                       <template>
-                        <paper-input no-label-float placeholder="[[header]]" value="[[_computeDate(dateFrom, dateTo)]]" readonly>
+                        <paper-input no-label-float placeholder="[[header]]" value="[[_computeDate(dateFrom, dateTo, noRange)]]" readonly>
                         </paper-input>
                       </template>
                     </range-datepicker-input>
@@ -95,6 +95,10 @@
             type: String,
           },
           locale: String,
+          noRange: {
+            type: Boolean,
+            value: false,
+          },
         };
       }
 
@@ -127,9 +131,12 @@
         });
       }
 
-      _computeDate(dateFrom, dateTo) {
+      _computeDate(dateFrom, dateTo, noRange) {
         if (dateFrom && dateTo) {
           return `${dateFrom} ${dateTo}`;
+        }
+        if (noRange && dateFrom) {
+          return dateFrom;
         }
         return null;
       }
