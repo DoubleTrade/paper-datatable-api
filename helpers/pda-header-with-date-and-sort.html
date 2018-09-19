@@ -90,9 +90,11 @@
           },
           dateFrom: {
             type: String,
+            observer: '_dateFromChanged',
           },
           dateTo: {
             type: String,
+            observer: '_dateToChanged',
           },
           locale: String,
           noRange: {
@@ -102,16 +104,22 @@
         };
       }
 
-      static get observers() {
-        return ['_dateChanged(dateTo)'];
-      }
-
-      _dateChanged(dateTo) {
+      _dateToChanged(dateTo) {
         if (this.dateFrom && dateTo) {
           this.dispatchEvent(new CustomEvent('filter', {
             detail: {
               dateFrom: parseInt(this.dateFrom, 10),
               dateTo: parseInt(dateTo, 10),
+            },
+          }));
+        }
+      }
+
+      _dateFromChanged(dateFrom) {
+        if (dateFrom && this.noRange) {
+          this.dispatchEvent(new CustomEvent('filter', {
+            detail: {
+              dateFrom: parseInt(dateFrom, 10),
             },
           }));
         }
