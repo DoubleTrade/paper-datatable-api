@@ -196,8 +196,8 @@
             const trLocal = document.createElement('tr');
             this._fillColumns(rowData, conf, trLocal);
             trLocal.addEventListener('mouseover', () => this.dispatchEvent(new CustomEvent('tr-mouseover', { detail: rowData })));
+            trLocal.addEventListener('mouseout', () => this.dispatchEvent(new CustomEvent('tr-mouseout', { detail: rowData })));
             trLocal.addEventListener('tap', () => this.dispatchEvent(new CustomEvent('tap-tr', { detail: rowData })));
-            // this.listen(trLocal, 'mouseout', 'onOutTr');
             this.shadowRoot.querySelector('tbody').appendChild(trLocal);
 
             if (this.selectedKey) {
