@@ -47,14 +47,17 @@
               ;
             }
 
-            paper-icon-button {
+            paper-icon-button[icon="search"] {
+              padding: 0;
+              width: 24px;
+              height: 24px;
             }
           </style>
             <dom-if if="[[active]]">
               <template>
                 <pda-header-with-sort direction="{{direction}}">
                   <div class="layout horizontal center">
-                    <range-datepicker-input no-range="[[noRange]]" horizontal-align="right" date-format="[[dateFormat]]" locale="[[locale]]" date-from="{{dateFrom}}" date-to="{{dateTo}}" force-narrow>
+                    <range-datepicker-input no-range="[[noRange]]" horizontal-align="[[horizontalAlign]]" date-format="[[dateFormat]]" locale="[[locale]]" date-from="{{dateFrom}}" date-to="{{dateTo}}" force-narrow>
                       <template>
                         <paper-input no-label-float placeholder="[[header]]" value="[[_computeDate(dateFrom, dateTo, noRange)]]" readonly>
                         </paper-input>
@@ -67,9 +70,13 @@
             </dom-if>
             <dom-if if="[[!active]]">
               <template>
-                <pda-header-with-sort direction="{{direction}}" on-tap="_toggleActive">
-                  [[header]]
-                  <paper-icon-button slot="actions" icon="search"></paper-icon-button>
+                <pda-header-with-sort direction="{{direction}}">
+                  <div on-tap="_toggleActive">
+                    [[header]]
+                  </div>
+                  <div slot="actions">
+                    <paper-icon-button icon="search" on-tap="_toggleActive"></paper-icon-button>
+                  </div>
                 </pda-header-with-sort>
               </template>
             </dom-if>
@@ -100,6 +107,10 @@
           noRange: {
             type: Boolean,
             value: false,
+          },
+          horizontalAlign: {
+            type: String,
+            value: 'right',
           },
         };
       }

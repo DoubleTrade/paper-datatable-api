@@ -47,6 +47,13 @@
             }
 
             paper-icon-button {
+              padding: 0;
+              width: 24px;
+              height: 24px;
+            }
+
+            .header {
+              margin-right: 16px;
             }
           </style>
             <dom-if if="[[active]]">
@@ -59,7 +66,7 @@
             <dom-if if="[[!active]]">
               <template>
                 <div class="layout horizontal center" on-tap="_toggleActive">
-                  <div class="flex">[[header]]</div>
+                  <div class="flex header">[[header]]</div>
                   <paper-icon-button slot="actions" icon="search"></paper-icon-button>
                 </div>
               </template>

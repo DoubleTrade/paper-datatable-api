@@ -8,6 +8,7 @@
 <link rel="import" href="../../iron-icon/iron-icon.html">
 <link rel="import" href="../../iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="./pda-header-with-sort.html">
+<link rel="import" href="./pda-header-with-choices.html">
 
 <dom-module id="pda-header-with-choices-and-sort">
   <script>
@@ -44,26 +45,9 @@
             }
           </style>
           <pda-header-with-sort direction="{{direction}}">
-            <div class="layout horizontal center">
-              <paper-menu-button ignore-select dynamic-align>
-                <div slot="dropdown-trigger" class="layout horizontal center">
-                  <span class="flex">[[header]]</span>
-                  <paper-icon-button icon="arrow-drop-down"></paper-icon-button>
-                </div>
-                <paper-listbox slot="dropdown-content" selected-values="{{selectedChoices}}" multi attr-for-selected="name">
-                  <dom-repeat items="[[choices]]" as="choice">
-                    <template>
-                      <paper-icon-item name="[[choice.key]]">
-                        <iron-icon slot="item-icon" icon$="[[_computeIconName(choice.key, selectedChoices.*)]]"></iron-icon>
-                        <paper-item-body style$="[[choice.style]]">
-                          [[choice.label]]
-                        </paper-item-body>
-                      </paper-icon-item>
-                    </template>
-                  </dom-repeat>
-                </paper-listbox>
-              </paper-menu-button>
-            </div>
+            <pda-header-with-choices selected-choices="{{selected-choices}}" choices="[[choices]]">
+              [[header]]
+            </pda-header-with-choices>
           </pda-header-with-sort>
       `;
       }
@@ -76,22 +60,11 @@
             notify: true,
           },
           choices: Array,
-          selectedItems: {
-            type: Array,
-            notify: true,
-          },
           selectedChoices: {
             type: Array,
             notify: true,
           },
         };
-      }
-
-      _computeIconName(choice, selectedChoices) {
-        if (selectedChoices.base.indexOf(choice) === -1) {
-          return 'check-box-outline-blank';
-        }
-        return 'check-box';
       }
     }
 

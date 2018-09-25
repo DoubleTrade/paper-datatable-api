@@ -47,6 +47,13 @@
             }
 
             paper-icon-button {
+              padding: 0;
+              width: 24px;
+              height: 24px;
+            }
+
+            .header {
+              margin-right: 16px;
             }
           </style>
             <dom-if if="[[active]]">
@@ -61,7 +68,7 @@
             <dom-if if="[[!active]]">
               <template>
                 <pda-header-with-sort direction="{{direction}}">
-                  <div on-tap="_toggleActive">
+                  <div class="header" on-tap="_toggleActive">
                     [[header]]
                   </div>
                   <paper-icon-button slot="actions" icon="search" on-tap="_toggleActive"></paper-icon-button>
