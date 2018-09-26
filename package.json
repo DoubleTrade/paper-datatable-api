@@ -1,7 +1,7 @@
 {
   "name": "paper-datatable-api",
   "description": "A material design implementation of a data table",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "keywords": [
     "web-component",
     "web-components",
