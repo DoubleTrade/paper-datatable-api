@@ -119,6 +119,11 @@
             value: () => [],
           },
           _observer: Object,
+          rendering: {
+            type: Boolean,
+            value: false,
+            notify: true,
+          },
         };
       }
 
@@ -266,8 +271,10 @@
 
       _dataChanged(data, conf) {
         if (data && conf && conf.length > 0) {
+          this.set('rendering', true);
           this._fillHeaders(conf);
           this._fillRows(data, conf);
+          this.set('rendering', false);
         }
       }
 
