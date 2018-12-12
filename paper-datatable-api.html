@@ -179,7 +179,7 @@
               const paperDatatableApiColumnHeader =
                 this.paperDatatableApiColumnsHeader[columnInfo.property];
               if (paperDatatableApiColumnHeader) {
-                const instance = paperDatatableApiColumnHeader.fillTemplate(columnInfo.header);
+                const instance = paperDatatableApiColumnHeader.fillTemplate(columnInfo.header, { property: columnInfo.property });
                 thLocal.appendChild(instance.root);
               } else {
                 thLocal.innerText = columnInfo.header;
