@@ -49,6 +49,10 @@
               margin-left: 4px;
               color: #1E73BE;
             }
+
+            .choice-icon {
+              margin-left: 24px;
+            }
           </style>
           <div class="layout horizontal center">
             <paper-menu-button ignore-select dynamic-align>
@@ -71,6 +75,11 @@
                       <paper-item-body style$="[[choice.style]]">
                         [[choice.label]]
                       </paper-item-body>
+                      <dom-if if="[[choice.icon]]">
+                        <template>
+                            <iron-icon class="choice-icon" style$="[[choice.iconStyle]]" icon$="[[choice.icon]]"></iron-icon>
+                        </template>
+                      </dom-if>  
                     </paper-icon-item>
                   </template>
                 </dom-repeat>
