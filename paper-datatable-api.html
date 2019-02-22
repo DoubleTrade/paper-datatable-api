@@ -208,7 +208,7 @@
             if (this.selectedKey) {
               const selectable = this._extractData(rowData, this.selectedKey);
               trLocal.dataset.selectable = selectable;
-              if (this.selectedData.indexOf(selectable) !== -1) {
+              if (this.selectedData && this.selectedData.indexOf(selectable) !== -1) {
                 trLocal.classList.add('selected');
               }
             }
