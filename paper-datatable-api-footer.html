@@ -75,7 +75,7 @@
         <div class="layout horizontal end-justified center">
           <div class="layout horizontal center">
             <div>
-              Ligne par page
+              [[localize('linesPerPage')]]
             </div>
             <div class="size">
               <paper-dropdown-menu no-label-float vertical-align="bottom">
@@ -90,31 +90,32 @@
             </div>
           </div>
           <div class="status">
-            [[_computeCurrentSize(page, size)]]-[[_computeCurrentMaxSize(page, size, totalElements)]] sur
+            [[_computeCurrentSize(page, size)]]-[[_computeCurrentMaxSize(page, size, totalElements)]]
+            [[localize('of')]]
             [[totalElements]]
           </div>
           <dom-if if="[[!_prevButtonEnabled(page)]]">
             <template>
               <paper-icon-button id="previousPageBtn1" icon="chevron-left" disabled on-tap="_prevPage"></paper-icon-button>
-              <paper-tooltip for="previousPageBtn1" position="top">[[localize('pda.footer.previous-page')]]</paper-tooltip>
+              <paper-tooltip for="previousPageBtn1" position="top">[[localize('previousPage')]]</paper-tooltip>
             </template>
           </dom-if>
           <dom-if if="[[_prevButtonEnabled(page)]]">
             <template>
               <paper-icon-button id="previousPageBtn2" icon="chevron-left" on-tap="_prevPage"></paper-icon-button>
-              <paper-tooltip for="previousPageBtn2" position="top">[[localize('pda.footer.previous-page')]]</paper-tooltip>
+              <paper-tooltip for="previousPageBtn2" position="top">[[localize('previousPage')]]</paper-tooltip>
             </template>
           </dom-if>
           <dom-if if="[[!_nextButtonEnabled(page, totalPages)]]">
             <template>
               <paper-icon-button id="nextPageBtn1" icon="chevron-right" disabled on-tap="_nextPage"></paper-icon-button>
-              <paper-tooltip for="nextPageBtn1" position="top">[[localize('pda.footer.next-page')]]</paper-tooltip>
+              <paper-tooltip for="nextPageBtn1" position="top">[[localize('nextPage')]]</paper-tooltip>
             </template>
           </dom-if>
           <dom-if if="[[_nextButtonEnabled(page, totalPages)]]">
             <template>
               <paper-icon-button id="nextPageBtn2" icon="chevron-right" on-tap="_nextPage"></paper-icon-button>
-              <paper-tooltip for="nextPageBtn2" position="top">[[localize('pda.footer.next-page')]]</paper-tooltip>
+              <paper-tooltip for="nextPageBtn2" position="top">[[localize('nextPage')]]</paper-tooltip>
             </template>
           </dom-if>
         </div>
@@ -151,11 +152,51 @@
             type: String,
             value: 'fr'
           },
-        };
-      }
+          resources: {
+            notify: true,
+            value() {
+              return {
+                en: {
+                  nextPage: 'Next page',
+                  previousPage: 'Previous page',
+                  linesPerPage: 'Lines per page',
+                  of: 'of'
 
-      attached() {
-        this.loadResources(this.resolveUrl('locales.json'));
+                },
+                'en-en': {
+                  nextPage: 'Next page',
+                  previousPage: 'Previous page',
+                  linesPerPage: 'Lines per page',
+                  of: 'of'
+                },
+                'en-US': {
+                  nextPage: 'Next page',
+                  previousPage: 'Previous page',
+                  linesPerPage: 'Lines per page',
+                  of: 'of'
+                },
+                'en-us': {
+                  nextPage: 'Next page',
+                  previousPage: 'Previous page',
+                  linesPerPage: 'Lines per page',
+                  of: 'of'
+                },
+                fr: {
+                  nextPage: 'Page suivante',
+                  previousPage: 'Page précédente',
+                  linesPerPage: 'Lignes par page',
+                  of: 'sur'
+                },
+                'fr-fr': {
+                  nextPage: 'Page suivante',
+                  previousPage: 'Page précédente',
+                  linesPerPage: 'Lignes par page',
+                  of: 'sur'
+                },
+              };
+            },
+          },
+        };
       }
 
       _computeCurrentSize(page, size) {

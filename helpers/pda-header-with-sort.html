@@ -65,11 +65,44 @@
             type: String,
             value: 'fr'
           },
+          resources: {
+            notify: true,
+            value() {
+              return {
+                en: {
+                  sortAZ: 'Sort A-Z',
+                  sortZA: 'Sort Z-A',
+                  sortCancel: 'Cancel sort'
+                },
+                'en-en': {
+                  sortAZ: 'Sort A-Z',
+                  sortZA: 'Sort Z-A',
+                  sortCancel: 'Cancel sort'
+                },
+                'en-US': {
+                  sortAZ: 'Sort A-Z',
+                  sortZA: 'Sort Z-A',
+                  sortCancel: 'Cancel sort'
+                },
+                'en-us': {
+                  sortAZ: 'Sort A-Z',
+                  sortZA: 'Sort Z-A',
+                  sortCancel: 'Cancel sort'
+                },
+                fr: {
+                  sortAZ: 'Trier de A à Z',
+                  sortZA: 'Trier de Z à A',
+                  sortCancel: 'Annuler le tri'
+                },
+                'fr-fr': {
+                  sortAZ: 'Trier de A à Z',
+                  sortZA: 'Trier de Z à A',
+                  sortCancel: 'Annuler le tri'
+                },
+              };
+            },
+          },
         };
-      }
-
-      attached() {
-        this.loadResources(this.resolveUrl('../locales.json'));
       }
 
       _handleSort() {
@@ -88,11 +121,11 @@
 
       _getTooltipText(localize, direction) {
         if (direction === 'asc') {
-          return localize('pda.header.sort.cancel');
+          return localize('sortCancel');
         } else if (direction === 'desc') {
-          return localize('pda.header.sort.AZ');
+          return localize('sortAZ');
         }
-        return localize('pda.header.sort.ZA');
+        return localize('sortZA');
       }
     }
 
