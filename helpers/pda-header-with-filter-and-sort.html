@@ -65,7 +65,8 @@
               <template>
                 <pda-header-with-sort direction="{{direction}}">
                   <paper-input no-label-float placeholder="[[header]]" value="{{filterValue}}">
-                    <paper-icon-button icon="clear" slot="suffix" on-tap="_toggleActive"></paper-icon-button>
+                    <paper-icon-button id="clearBtn" icon="clear" slot="suffix" on-tap="_toggleActive"></paper-icon-button>
+                    <paper-tooltip for="clearBtn" slot="suffix">[[localize('clear')]]</paper-tooltip>
                   </paper-input>
                 </pda-header-with-sort>
               </template>
@@ -110,21 +111,27 @@
               return {
                 en: {
                   search: 'Search',
+                  clear: 'Clear',
                 },
                 'en-en': {
                   search: 'Search',
+                  clear: 'Clear',
                 },
                 'en-US': {
                   search: 'Search',
+                  clear: 'Clear',
                 },
                 'en-us': {
                   search: 'Search',
+                  clear: 'Clear',
                 },
                 fr: {
                   search: 'Rechercher',
+                  clear: 'Effacer',
                 },
                 'fr-fr': {
                   search: 'Rechercher',
+                  clear: 'Effacer',
                 },
               };
             },
