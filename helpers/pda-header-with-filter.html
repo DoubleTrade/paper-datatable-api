@@ -2,6 +2,7 @@
 <link rel="import" href="../../paper-input/paper-input.html">
 <link rel="import" href="../../paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../../app-localize-behavior/app-localize-behavior.html">
 <link rel="import" href="./pda-header-with-sort.html">
 
 <dom-module id="pda-header-with-filter">
@@ -13,8 +14,12 @@
      * @customElement
      * @polymer
      * @demo demo/index.html
-     */
-    class PdaHeaderWithFilter extends Polymer.Element {
+
+    * @appliesMixin Polymer.AppLocalizeBehavior
+    */
+    class PdaHeaderWithFilter extends Polymer.mixinBehaviors(
+      [Polymer.AppLocalizeBehavior], Polymer.Element
+    ) {
       static get is() {
         return 'pda-header-with-filter';
       }
@@ -67,7 +72,8 @@
               <template>
                 <div class="layout horizontal center" on-tap="_toggleActive">
                   <div class="flex header">[[header]]</div>
-                  <paper-icon-button slot="actions" icon="search"></paper-icon-button>
+                  <paper-icon-button id="searchBtn" slot="actions" icon="search"></paper-icon-button>
+                  <paper-tooltip id="searchBtn" slot="actions">[[localize('search')]]</paper-tooltip>
                 </div>
               </template>
             </dom-if>
@@ -89,6 +95,35 @@
           filterValue: {
             type: String,
             notify: true,
+          },
+          language: {
+            type: String,
+            value: 'fr'
+          },
+          resources: {
+            notify: true,
+            value() {
+              return {
+                en: {
+                  search: 'Search',
+                },
+                'en-en': {
+                  search: 'Search',
+                },
+                'en-US': {
+                  search: 'Search',
+                },
+                'en-us': {
+                  search: 'Search',
+                },
+                fr: {
+                  search: 'Rechercher',
+                },
+                'fr-fr': {
+                  search: 'Rechercher',
+                },
+              };
+            },
           },
         };
       }
