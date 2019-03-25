@@ -7,58 +7,78 @@
 
   <title>paper-datatable-api demo</title>
 
-  <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+  <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
 
-  <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
-  <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
-  <link rel="import" href="../../iron-ajax/iron-ajax.html">
-  <link rel="import" href="../../paper-input/paper-input.html">
-  <link rel="import" href="../paper-datatable-api.html">
-  <link rel="import" href="../paper-datatable-api-column.html">
+  <script type="module" src="../node_modules/@polymer/iron-demo-helpers/demo-pages-shared-styles.js"></script>
+  <script type="module" src="../node_modules/@polymer/iron-demo-helpers/demo-snippet.js"></script>
+  <script type="module" src="../node_modules/@polymer/iron-ajax/iron-ajax.js"></script>
+  <script type="module" src="../node_modules/@polymer/paper-input/paper-input.js"></script>
+  <script type="module" src="../paper-datatable-api.js"></script>
+  <script type="module" src="../paper-datatable-api-column.js"></script>
 
-  <custom-style>
+  <!-- FIXME(polymer-modulizer):
+        These imperative modules that innerHTML your HTML are
+        a hacky way to be sure that any mixins in included style
+        modules are ready before any elements that reference them are
+        instantiated, otherwise the CSS @apply mixin polyfill won't be
+        able to expand the underlying CSS custom properties.
+        See: https://github.com/Polymer/polymer-modulizer/issues/154
+        -->
+  <script type="module">
+    const $_documentContainer = document.createElement('template');
+
+    $_documentContainer.innerHTML = `<custom-style>
     <style is="custom-style" include="demo-pages-shared-styles">
     </style>
-  </custom-style>
+  </custom-style>`;
+
+    document.body.appendChild($_documentContainer.content);
+  </script>
 </head>
 
 <body>
-  <div class="vertical-section-container centered">
-    <h3>Basic paper-datatable-api demo</h3>
-    <demo-snippet>
-      <template>
-        <dom-bind>
-          <template>
-            <iron-ajax auto url="data/data.json" last-response="{{data}}"></iron-ajax>
-            <iron-ajax auto url="data/conf.json" last-response="{{conf}}"></iron-ajax>
+  <script type="module">
+    const $_documentContainer = document.createElement('template');
 
-            <paper-datatable-api conf="[[conf]]" data="[[data]]" selectable>
-              <paper-datatable-api-column header property="fruit">
-                <template>
-                  <paper-input no-label-float label="Fruit"></paper-input>
-                </template>
-              </paper-datatable-api-column>
-              <paper-datatable-api-column column property="fruit" other-properties='["color"]'>
-                <template>
-                  <span>[[value]], color: [[otherValues.color]]</span>
-                </template>
-              </paper-datatable-api-column>
-              <paper-datatable-api-column column property="weight">
-                <template>
-                  <span>[[value.kg]]</span>
-                </template>
-              </paper-datatable-api-column>
-              <paper-datatable-api-column column property="weight.gr">
-                <template>
-                  <span>[[value]]</span>
-                </template>
-              </paper-datatable-api-column>
-            </paper-datatable-api>
-          </template>
-        </dom-bind>
-      </template>
-    </demo-snippet>
-  </div>
+    $_documentContainer.innerHTML = `<div class="vertical-section-container centered">
+      <h3>Basic paper-datatable-api demo</h3>
+      <demo-snippet>
+        <template>
+          <dom-bind>
+            <template>
+              <iron-ajax auto url="data/data.json" last-response="{{data}}"></iron-ajax>
+              <iron-ajax auto url="data/conf.json" last-response="{{conf}}"></iron-ajax>
+
+              <paper-datatable-api conf="[[conf]]" data="[[data]]" selectable>
+                <paper-datatable-api-column header property="fruit">
+                  <template>
+                    <paper-input no-label-float label="Fruit"></paper-input>
+                  </template>
+                </paper-datatable-api-column>
+                <paper-datatable-api-column column property="fruit" other-properties="[&quot;color&quot;]">
+                  <template>
+                    <span>[[value]], color: [[otherValues.color]]</span>
+                  </template>
+                </paper-datatable-api-column>
+                <paper-datatable-api-column column property="weight">
+                  <template>
+                    <span>[[value.kg]]</span>
+                  </template>
+                </paper-datatable-api-column>
+                <paper-datatable-api-column column property="weight.gr">
+                  <template>
+                    <span>[[value]]</span>
+                  </template>
+                </paper-datatable-api-column>
+              </paper-datatable-api>
+            </template>
+          </dom-bind>
+        </template>
+      </demo-snippet>
+    </div>`;
+
+    document.body.appendChild($_documentContainer.content);
+  </script>
 </body>
 
 </html>
