@@ -8,7 +8,7 @@
     "grid",
     "table"
   ],
-  "name": "paper-datatable-api",
+  "name": "@doubletrade/paper-datatable-api",
   "version": "0.0.13",
   "maintainers": [
     {
