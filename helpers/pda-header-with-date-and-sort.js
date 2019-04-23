@@ -5,6 +5,7 @@ import { microTask } from '@polymer/polymer/lib/utils/async';
 import '@polymer/paper-input/paper-input';
 import '@polymer/paper-icon-button/paper-icon-button';
 import '@polymer/iron-flex-layout/iron-flex-layout-classes';
+import '@doubletrade/range-datepicker/range-datepicker-input';
 import './pda-header-with-sort';
 
 class PdaHeaderWithDateAndSort extends PolymerElement {
@@ -136,10 +137,12 @@ class PdaHeaderWithDateAndSort extends PolymerElement {
     }
     flush();
     const paperInput = this.shadowRoot.querySelector('paper-input');
-    paperInput.setAttribute('tabindex', 1);
-    microTask.run(() => {
-      paperInput.focus();
-    });
+    if (paperInput) {
+      paperInput.setAttribute('tabindex', 1);
+      microTask.run(() => {
+        paperInput.focus();
+      });
+    }
   }
 
   _computeDate(dateFrom, dateTo, noRange) {
