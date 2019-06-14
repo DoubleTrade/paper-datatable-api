@@ -48,7 +48,7 @@ class PaperDatatableApi extends PolymerElement {
         }
 
         tbody tr {
-          @apply --paper-datatable-api-tr;
+          @apply --paper-datautable-api-tr;
           height: 48px;
         }
 
@@ -73,6 +73,7 @@ class PaperDatatableApi extends PolymerElement {
           font-weight: normal;
           color: rgba(0, 0, 0, var(--dark-primary-opacity));
           padding: 6px var(--paper-datatable-api-horizontal-padding, 26px);
+          cursor: var(--paper-datatable-api-td-cursor, inherit);
         }
 
         tbody tr:not(:first-child) td {
@@ -134,8 +135,7 @@ class PaperDatatableApi extends PolymerElement {
     super.connectedCallback();
     this._observer = new FlattenedNodesObserver(this, ({ addedNodes }) => {
       this.paperDatatableApiColumns = addedNodes
-        .filter(n =>
-          n.tagName === 'PAPER-DATATABLE-API-COLUMN' && n.getAttribute('column') !== null)
+        .filter(n => n.tagName === 'PAPER-DATATABLE-API-COLUMN' && n.getAttribute('column') !== null)
         .reduce((columns, n) => {
           const property = n.getAttribute('property');
           const newColumns = columns;
@@ -144,8 +144,7 @@ class PaperDatatableApi extends PolymerElement {
         }, {});
 
       this.paperDatatableApiColumnsHeader = addedNodes
-        .filter(n =>
-          n.tagName === 'PAPER-DATATABLE-API-COLUMN' && n.getAttribute('header') !== null)
+        .filter(n => n.tagName === 'PAPER-DATATABLE-API-COLUMN' && n.getAttribute('header') !== null)
         .reduce((columns, n) => {
           const property = n.getAttribute('property');
           const newColumns = columns;
@@ -175,8 +174,7 @@ class PaperDatatableApi extends PolymerElement {
       conf.forEach((columnInfo) => {
         if (!columnInfo.hidden) {
           const thLocal = document.createElement('th');
-          const paperDatatableApiColumnHeader =
-            this.paperDatatableApiColumnsHeader[columnInfo.property];
+          const paperDatatableApiColumnHeader = this.paperDatatableApiColumnsHeader[columnInfo.property];
           if (paperDatatableApiColumnHeader) {
             const instance = paperDatatableApiColumnHeader.fillTemplate(
               columnInfo.header,
