@@ -32,6 +32,13 @@ class PdaHeaderWithRadio extends PolymerElement {
           padding: 0;
           width: 24px;
           height: 24px;
+          --paper-icon-button: {
+            color: var(--paper-icon-button-color);
+          }
+
+          --paper-icon-button-hover: {
+            color: var(--paper-icon-button-color-hover);
+          }
         }
 
         .selected {

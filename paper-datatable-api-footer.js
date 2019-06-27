@@ -41,6 +41,15 @@ class DtPaperDatatableApiFooter
           height: 24px;
           padding: 0;
           margin-left: 24px;
+          --paper-icon-button: {
+            color: var(--paper-icon-button-color);
+          }
+          --paper-icon-button-disabled: {
+            color: var(--paper-icon-button-color-disabled);
+          }
+          --paper-icon-button-hover: {
+            color: var(--paper-icon-button-color-hover);
+          }
         }
 
         .foot .status {
@@ -53,6 +62,11 @@ class DtPaperDatatableApiFooter
         }
 
         .size paper-dropdown-menu {
+
+          --paper-dropdown-menu-icon: {
+            color: var(--paper-icon-button-color);
+          }
+
           --paper-input-container-underline: {
             display: none;
           }

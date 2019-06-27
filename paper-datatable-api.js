@@ -48,7 +48,7 @@ class PaperDatatableApi extends PolymerElement {
         }
 
         tbody tr {
-          @apply --paper-datautable-api-tr;
+          @apply --paper-datatable-api-tr;
           height: 48px;
         }
 

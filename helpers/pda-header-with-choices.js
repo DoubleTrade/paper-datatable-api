@@ -50,6 +50,17 @@ class PdaHeaderWithChoices extends PolymerElement {
         .choice-icon {
           margin-left: 24px;
         }
+
+        paper-icon-button {
+          --paper-icon-button: {
+            color: var(--paper-icon-button-color);
+            transition: color 0.3s;
+          }
+
+          --paper-icon-button-hover: {
+            color: var(--paper-icon-button-color-hover);
+          }
+        }
       </style>
       <div class="layout horizontal center">
         <paper-menu-button ignore-select dynamic-align>

@@ -18,6 +18,13 @@ class PdaHeaderWithSort extends mixinBehaviors([AppLocalizeBehavior], PolymerEle
 
         paper-icon-button {
           transition: transform .2s linear;
+          --paper-icon-button: {
+            color: var(--paper-icon-button-color);
+          }
+
+          --paper-icon-button-hover: {
+            color: var(--paper-icon-button-color-hover);
+          }
         }
 
         .desc {
