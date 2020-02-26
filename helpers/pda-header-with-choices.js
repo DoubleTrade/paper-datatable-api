@@ -44,7 +44,7 @@ class PdaHeaderWithChoices extends PolymerElement {
         .selected {
           font-style: italic;
           margin-left: 4px;
-          color: #1E73BE;
+          color: var(--primary-color, #1E73BE);
         }
 
         .choice-icon {
