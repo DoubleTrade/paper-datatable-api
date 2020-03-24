@@ -151,6 +151,7 @@ class PdaHeaderWithFilterAndSort extends PolymerElement {
     if (this.resources && this.resources[language]) {
       return this.resources[language][key] || '';
     }
+    return '';
   }
 }
 

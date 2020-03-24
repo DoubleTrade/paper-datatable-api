@@ -7,7 +7,7 @@ import '@polymer/paper-icon-button/paper-icon-button';
 import '@polymer/iron-flex-layout/iron-flex-layout-classes';
 import './pda-header-with-sort';
 
-class PdaHeaderWithFilter extends PolymerElement) {
+class PdaHeaderWithFilter extends PolymerElement {
   static get is() {
     return 'pda-header-with-filter';
   }
@@ -147,6 +147,7 @@ class PdaHeaderWithFilter extends PolymerElement) {
     if (this.resources && this.resources[language]) {
       return this.resources[language][key] || '';
     }
+    return '';
   }
 }
 

@@ -213,6 +213,7 @@ class DtPaperDatatableApiFooter extends PolymerElement {
     if (this.resources && this.resources[language]) {
       return this.resources[language][key] || '';
     }
+    return '';
   }
 
   _computeCurrentSize(page, size) {
