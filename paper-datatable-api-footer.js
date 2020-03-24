@@ -210,7 +210,7 @@ class DtPaperDatatableApiFooter extends PolymerElement {
   }
 
   localize(key, language) {
-    if (this.resources && this.resources[language]) {
+    if (this && this.resources && this.resources[language]) {
       return this.resources[language][key] || '';
     }
     return '';
@@ -246,7 +246,7 @@ class DtPaperDatatableApiFooter extends PolymerElement {
   }
 
   _newSizeIsSelected() {
-    const newSize = this.$$('paper-listbox').selected;
+    const newSize = this.shadowRoot.querySelector('paper-listbox').selected;
     if (newSize) {
       if (this.oldPage !== null && this.oldPage !== undefined) {
         this.page = 0;

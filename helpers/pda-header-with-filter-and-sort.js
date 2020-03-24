@@ -61,7 +61,7 @@ class PdaHeaderWithFilterAndSort extends PolymerElement {
             <pda-header-with-sort direction="{{direction}}">
               <paper-input no-label-float placeholder="[[header]]" value="{{filterValue}}">
                 <paper-icon-button id="clearBtn" icon="clear" slot="suffix" on-tap="_toggleActive"></paper-icon-button>
-                <paper-tooltip for="clearBtn" slot="suffix">[[localize('clear')]]</paper-tooltip>
+                <paper-tooltip for="clearBtn" slot="suffix">[[localize('clear', language)]]</paper-tooltip>
               </paper-input>
             </pda-header-with-sort>
           </template>
@@ -73,7 +73,7 @@ class PdaHeaderWithFilterAndSort extends PolymerElement {
                 [[header]]
               </div>
               <paper-icon-button id="searchBtn" slot="actions" icon="search" on-tap="_toggleActive"></paper-icon-button>
-              <paper-tooltip for="searchBtn" slot="actions">[[localize('search')]]</paper-tooltip>
+              <paper-tooltip for="searchBtn" slot="actions">[[localize('search', language)]]</paper-tooltip>
             </pda-header-with-sort>
           </template>
         </dom-if>
@@ -148,7 +148,7 @@ class PdaHeaderWithFilterAndSort extends PolymerElement {
   }
 
   localize(key, language) {
-    if (this.resources && this.resources[language]) {
+    if (this && this.resources && this.resources[language]) {
       return this.resources[language][key] || '';
     }
     return '';

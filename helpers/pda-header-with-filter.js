@@ -60,7 +60,7 @@ class PdaHeaderWithFilter extends PolymerElement {
           <template>
             <paper-input no-label-float placeholder="[[header]]" value="{{filterValue}}">
               <paper-icon-button id="clearBtn" icon="clear" slot="suffix" on-tap="_toggleActive"></paper-icon-button>
-              <paper-tooltip for="clearBtn" id="searchBtn" slot="suffix">[[localize('clear')]]</paper-tooltip>
+              <paper-tooltip for="clearBtn" id="searchBtn" slot="suffix">[[localize('clear', language)]]</paper-tooltip>
             </paper-input>
           </template>
         </dom-if>
@@ -69,7 +69,7 @@ class PdaHeaderWithFilter extends PolymerElement {
             <div class="layout horizontal center" on-tap="_toggleActive">
               <div class="flex header">[[header]]</div>
               <paper-icon-button id="searchBtn" slot="actions" icon="search"></paper-icon-button>
-              <paper-tooltip for="searchBtn" slot="actions">[[localize('search')]]</paper-tooltip>
+              <paper-tooltip for="searchBtn" slot="actions">[[localize('search', language)]]</paper-tooltip>
             </div>
           </template>
         </dom-if>
@@ -144,7 +144,7 @@ class PdaHeaderWithFilter extends PolymerElement {
   }
 
   localize(key, language) {
-    if (this.resources && this.resources[language]) {
+    if (this && this.resources && this.resources[language]) {
       return this.resources[language][key] || '';
     }
     return '';

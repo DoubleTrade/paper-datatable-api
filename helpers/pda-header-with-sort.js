@@ -41,7 +41,7 @@ class PdaHeaderWithSort extends PolymerElement {
         </div>
         <slot name="actions"></slot>
         <paper-icon-button id="sortBtn" icon="arrow-downward" on-tap="_handleSort" class$="[[direction]]"></paper-icon-button>
-        <paper-tooltip for="sortBtn">[[_getTooltipText(localize, direction)]]<paper-tooltip>
+        <paper-tooltip for="sortBtn">[[_getTooltipText(localize, direction, language)]]<paper-tooltip>
       </div>
   `;
   }
@@ -111,17 +111,17 @@ class PdaHeaderWithSort extends PolymerElement {
     }
   }
 
-  _getTooltipText(localize, direction) {
+  _getTooltipText(localize, direction, language) {
     if (direction === 'asc') {
-      return localize('sortCancel');
+      return localize('sortCancel', language);
     } else if (direction === 'desc') {
-      return localize('sortAZ');
+      return localize('sortAZ', language);
     }
-    return localize('sortZA');
+    return localize('sortZA', language);
   }
 
   localize(key, language) {
-    if (this.resources && this.resources[language]) {
+    if (this && this.resources && this.resources[language]) {
       return this.resources[language][key] || '';
     }
     return '';
