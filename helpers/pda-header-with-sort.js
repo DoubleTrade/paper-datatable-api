@@ -1,11 +1,9 @@
 import { PolymerElement } from '@polymer/polymer/polymer-element';
-import { AppLocalizeBehavior } from '@polymer/app-localize-behavior/app-localize-behavior';
 import { html } from '@polymer/polymer/lib/utils/html-tag';
-import { mixinBehaviors } from '@polymer/polymer/lib/legacy/class';
 import '@polymer/iron-flex-layout/iron-flex-layout-classes';
 import '@polymer/paper-tooltip/paper-tooltip';
 
-class PdaHeaderWithSort extends mixinBehaviors([AppLocalizeBehavior], PolymerElement) {
+class PdaHeaderWithSort extends PolymerElement {
   static get is() {
     return 'pda-header-with-sort';
   }
@@ -120,6 +118,12 @@ class PdaHeaderWithSort extends mixinBehaviors([AppLocalizeBehavior], PolymerEle
       return localize('sortAZ');
     }
     return localize('sortZA');
+  }
+
+  localize(key, language) {
+    if (this.resources && this.resources[language]) {
+      return this.resources[language][key] || '';
+    }
   }
 }
 

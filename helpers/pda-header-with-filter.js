@@ -2,14 +2,12 @@ import { PolymerElement } from '@polymer/polymer/polymer-element';
 import { html } from '@polymer/polymer/lib/utils/html-tag';
 import { flush } from '@polymer/polymer/lib/legacy/polymer.dom';
 import { microTask } from '@polymer/polymer/lib/utils/async';
-import { mixinBehaviors } from '@polymer/polymer/lib/legacy/class';
-import { AppLocalizeBehavior } from '@polymer/app-localize-behavior/app-localize-behavior';
 import '@polymer/paper-input/paper-input';
 import '@polymer/paper-icon-button/paper-icon-button';
 import '@polymer/iron-flex-layout/iron-flex-layout-classes';
 import './pda-header-with-sort';
 
-class PdaHeaderWithFilter extends mixinBehaviors([AppLocalizeBehavior], PolymerElement) {
+class PdaHeaderWithFilter extends PolymerElement) {
   static get is() {
     return 'pda-header-with-filter';
   }
@@ -143,6 +141,12 @@ class PdaHeaderWithFilter extends mixinBehaviors([AppLocalizeBehavior], PolymerE
     microTask.run(() => {
       paperInput.focus();
     });
+  }
+
+  localize(key, language) {
+    if (this.resources && this.resources[language]) {
+      return this.resources[language][key] || '';
+    }
   }
 }
 

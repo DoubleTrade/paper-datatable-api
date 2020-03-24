@@ -15,8 +15,7 @@
     "paper-menu-button": "PolymerElements/paper-menu-button#^2.0.0",
     "paper-radio-group": "PolymerElements/paper-radio-group#^2.0.0",
     "paper-radio-button": "PolymerElements/paper-radio-button#^2.0.0",
-    "paper-tooltip": "PolymerElements/paper-tooltip#^2.0.0",
-    "app-localize-behavior": "PolymerElements/app-localize-behavior#^2.0.0"
+    "paper-tooltip": "PolymerElements/paper-tooltip#^2.0.0"
   },
   "devDependencies": {
     "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^2.0.0",
