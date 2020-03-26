@@ -9,7 +9,7 @@
     "table"
   ],
   "name": "@doubletrade/paper-datatable-api",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "maintainers": [
     {
       "name": "Julien Rousseau - RoXuS",
@@ -33,7 +33,6 @@
     "@polymer/paper-input": "^3.0.0"
   },
   "dependencies": {
-    "@polymer/app-localize-behavior": "^3.0.0",
     "@polymer/iron-icon": "^3.0.0",
     "@polymer/iron-icons": "^3.0.0",
     "@polymer/paper-dropdown-menu": "^3.0.0",

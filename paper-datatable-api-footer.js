@@ -6,11 +6,8 @@ import '@polymer/paper-listbox/paper-listbox';
 import '@polymer/paper-item/paper-item';
 import '@polymer/paper-icon-button/paper-icon-button';
 import '@polymer/paper-tooltip/paper-tooltip';
-import { AppLocalizeBehavior } from '@polymer/app-localize-behavior/app-localize-behavior';
-import { mixinBehaviors } from '@polymer/polymer/lib/legacy/class';
 
-class DtPaperDatatableApiFooter
-  extends mixinBehaviors([AppLocalizeBehavior], PolymerElement) {
+class DtPaperDatatableApiFooter extends PolymerElement {
   static get is() {
     return 'paper-datatable-api-footer';
   }
@@ -94,7 +91,7 @@ class DtPaperDatatableApiFooter
           <div class="layout horizontal end-justified center">
             <div class="layout horizontal center">
               <div>
-                [[localize('linesPerPage')]]
+                [[localize('linesPerPage', language)]]
               </div>
               <div class="size">
                 <paper-dropdown-menu no-label-float vertical-align="bottom">
@@ -110,31 +107,31 @@ class DtPaperDatatableApiFooter
             </div>
             <div class="status">
               [[_computeCurrentSize(page, size)]]-[[_computeCurrentMaxSize(page, size, totalElements)]]
-              [[localize('of')]]
+              [[localize('of', language)]]
               [[totalElements]]
             </div>
             <dom-if if="[[!_prevButtonEnabled(page)]]">
               <template>
                 <paper-icon-button id="previousPageBtn1" icon="chevron-left" disabled on-tap="_prevPage"></paper-icon-button>
-                <paper-tooltip for="previousPageBtn1" position="top">[[localize('previousPage')]]</paper-tooltip>
+                <paper-tooltip for="previousPageBtn1" position="top">[[localize('previousPage', language)]]</paper-tooltip>
               </template>
             </dom-if>
             <dom-if if="[[_prevButtonEnabled(page)]]">
               <template>
                 <paper-icon-button id="previousPageBtn2" icon="chevron-left" on-tap="_prevPage"></paper-icon-button>
-                <paper-tooltip for="previousPageBtn2" position="top">[[localize('previousPage')]]</paper-tooltip>
+                <paper-tooltip for="previousPageBtn2" position="top">[[localize('previousPage', language)]]</paper-tooltip>
               </template>
             </dom-if>
             <dom-if if="[[!_nextButtonEnabled(page, totalPages)]]">
               <template>
                 <paper-icon-button id="nextPageBtn1" icon="chevron-right" disabled on-tap="_nextPage"></paper-icon-button>
-                <paper-tooltip for="nextPageBtn1" position="top">[[localize('nextPage')]]</paper-tooltip>
+                <paper-tooltip for="nextPageBtn1" position="top">[[localize('nextPage', language)]]</paper-tooltip>
               </template>
             </dom-if>
             <dom-if if="[[_nextButtonEnabled(page, totalPages)]]">
               <template>
                 <paper-icon-button id="nextPageBtn2" icon="chevron-right" on-tap="_nextPage"></paper-icon-button>
-                <paper-tooltip for="nextPageBtn2" position="top">[[localize('nextPage')]]</paper-tooltip>
+                <paper-tooltip for="nextPageBtn2" position="top">[[localize('nextPage', language)]]</paper-tooltip>
               </template>
             </dom-if>
           </div>
@@ -210,6 +207,12 @@ class DtPaperDatatableApiFooter
         },
       },
     };
+  }
+
+  localize(key, language) {
+    if (this.resources && this.resources[language]) {
+      return this.resources[language][key] || '';
+    }
   }
 
   _computeCurrentSize(page, size) {
